@@ -1,5 +1,6 @@
 #include "AVGController.hpp"
 #include <assert.h>
+#include <ctime>
 
 // init_file: the file path to the initialization configuration file (ini file)
 AVGController::AVGController() { //std::string init_file) {
@@ -74,6 +75,7 @@ void AVGController::generate_map() {
   path_node[0] = 0; // set the first column
   path_node[this->cols-1] = this->rows - 1; // set the last column
 
+  srand(time(NULL)); // Set a random seed
   // TODO: Random type improvement. Make the game more playable
   for (int j = 0; j < this->cols; ++j) {
     if (j != 0 && j != this->cols - 1) {
