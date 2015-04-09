@@ -86,7 +86,9 @@ public:
 					if (!intro_finished) {
 						this->avgc->play_audio(AVGController::AUDIO::INTRO, true, false);
 					}
-					if (this->avgc->audio->has_music() == 0) {
+					
+					// if the user wants to skip
+					if (!this->avgc->audio->has_music()) {
 						progress = GAME::BEFORE_START;
 					}
 					else if (pose == myo::Pose::waveIn) {
@@ -107,12 +109,12 @@ public:
 					}
 					else if (pose == myo::Pose::waveOut) {
 						// right
-						AVGController::STATE validity = this->avgc->go_to(AVGController::MOVE::RIGHT);
+						validity = this->avgc->go_to(AVGController::MOVE::RIGHT);
 						move_succeed_audio = AVGController::AUDIO::GO_RIGHT;
 					}
 					else if (pose == myo::Pose::fingersSpread) {
 						// forward
-						AVGController::STATE validity = this->avgc->go_to(AVGController::MOVE::FORWARD);
+						validity = this->avgc->go_to(AVGController::MOVE::FORWARD);
 						move_succeed_audio = AVGController::AUDIO::GO_FORWARD;
 					}
 					break;
