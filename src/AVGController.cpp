@@ -4,8 +4,8 @@
 
 // init_file: the file path to the initialization configuration file (ini file)
 AVGController::AVGController() { //std::string init_file) {
-  data["rows"] = 5;
-  data["cols"] = 5;
+  data["rows"] = 7;
+  data["cols"] = 7;
   data["number_of_targets"] = 4;
   data["health"] = 100;
   data["difficulty"] = 3; // 1 - 5
@@ -15,9 +15,6 @@ AVGController::AVGController() { //std::string init_file) {
   this->c_x = 0;
   this->c_y = 0;
   this->health = data["health"];
-
-  std::cout << "row " << this->rows << std::endl;
-  std::cout << "col " << this->cols << std::endl;
 
   int r = data["rows"];
   int c = data["cols"];
@@ -36,10 +33,10 @@ AVGController::AVGController() { //std::string init_file) {
   this->init_SDLAudio();
 
   if (sdl_initialized) {
-    this->initialized = true;
+	  this->initialized = true;
   }
   else {
-    std::cout << "Loading Music...Please Wait......" << std::endl;
+	  std::cout << "Loading Music...Please Wait......" << std::endl;
   }
 }
 
@@ -63,7 +60,7 @@ void AVGController::generate_map() {
 
   for (int i = 0; i < this->rows; ++i) {
     for (int j = 0; j < this->cols; ++j) {
-      this->fill_node(i, j, Node::TYPE::NOTHING, "Nothing Bro");
+		this->fill_node(i, j, Node::TYPE::NOTHING, "Nothing Bro");
     }
   }
 
@@ -78,13 +75,12 @@ void AVGController::generate_map() {
   srand(time(NULL)); // Set a random seed
   // TODO: Random type improvement. Make the game more playable
   for (int j = 0; j < this->cols; ++j) {
-    if (j != 0 && j != this->cols - 1) {
-      int i = rand() % (this->rows - 1); // random number between 0 and rows - 1
+	  if (j != 0 && j != this->cols - 1) {
+		int i = rand() % (this->rows - 1); // random number between 0 and rows - 1
 
-      this->fill_node(i, j, Node::TYPE::NORMAL, "There is nothing special there"); // 2 is normal
-      path_node[j] = i;
-
-    }
+		this->fill_node(i, j, Node::TYPE::NORMAL, "There is nothing special there"); // 2 is normal
+		path_node[j] = i;
+	  }
   }
 
   // TODO: Improve the way the map is generated
@@ -92,13 +88,13 @@ void AVGController::generate_map() {
     if (j != 0) {
       int diff = path_node[j] - path_node[j-1];
       for (int k = 1; k <= abs(diff); ++k) {
-	if (diff > 0) {
-	  this->fill_node(path_node[j - 1] + k, j - 1, Node::TYPE::NORMAL, "There is nothing special there");
-	} else {
-	  // opposite
-	  this->fill_node(path_node[j - 1] - k, j - 1, Node::TYPE::NORMAL, "There is nothing special there");
-	}
-      }
+		 if (diff > 0) {
+			 this->fill_node(path_node[j - 1] + k, j - 1, Node::TYPE::NORMAL, "There is nothing special there");
+		  } else {
+		  // opposite
+			 this->fill_node(path_node[j - 1] - k, j - 1, Node::TYPE::NORMAL, "There is nothing special there");
+		  }
+		}
     }
   }
 }
@@ -122,61 +118,61 @@ void AVGController::generate_map() {
 AVGController::STATE AVGController::go_to(AVGController::MOVE move) {
   switch (facing) {
   case DIRECTION::SOUTH: // south
-    if (move == MOVE::LEFT) { // left --> east (3)
-      return this->validate_move(DIRECTION::EAST);
-    }
-    else if (move == MOVE::RIGHT) {
-      return this->validate_move(DIRECTION::WEST);
-    }
-    else if (move == MOVE::FORWARD) {
-      return this->validate_move(DIRECTION::SOUTH);
-    }
-    else {
-      return STATE::ERROR;
-    }
-    break;
+	  if (move == MOVE::LEFT) { // left --> east (3)
+		  return this->validate_move(DIRECTION::EAST);
+	  }
+	  else if (move == MOVE::RIGHT) {
+		  return this->validate_move(DIRECTION::WEST);
+	  }
+	  else if (move == MOVE::FORWARD) {
+		  return this->validate_move(DIRECTION::SOUTH);
+	  }
+	  else {
+		  return STATE::ERROR;
+	  }
+	  break;
   case DIRECTION::NORTH: // north
-    if (move == MOVE::LEFT) { // left --> east (3)
-      return this->validate_move(DIRECTION::WEST);
-    }
-    else if (move == MOVE::RIGHT) {
-      return this->validate_move(DIRECTION::EAST);
-    }
-    else if (move == MOVE::FORWARD) {
-      return this->validate_move(DIRECTION::NORTH);
-    }
-    else {
-      return STATE::ERROR;
-    }
-    break;
+	  if (move == MOVE::LEFT) { // left --> east (3)
+		  return this->validate_move(DIRECTION::WEST);
+	  }
+	  else if (move == MOVE::RIGHT) {
+		  return this->validate_move(DIRECTION::EAST);
+	  }
+	  else if (move == MOVE::FORWARD) {
+		  return this->validate_move(DIRECTION::NORTH);
+	  }
+	  else {
+		  return STATE::ERROR;
+	  }
+	  break;
   case DIRECTION::WEST: // west
-    if (move == MOVE::LEFT) { // left --> east (3)
-      return this->validate_move(DIRECTION::SOUTH);
-    }
-    else if (move == MOVE::RIGHT) {
-      return this->validate_move(DIRECTION::NORTH);
-    }
-    else if (move == MOVE::FORWARD) {
-      return this->validate_move(DIRECTION::WEST);
-    }
-    else {
-      return STATE::ERROR;
-    }
-    break;
+	  if (move == MOVE::LEFT) { // left --> east (3)
+		  return this->validate_move(DIRECTION::SOUTH);
+	  }
+	  else if (move == MOVE::RIGHT) {
+		  return this->validate_move(DIRECTION::NORTH);
+	  }
+	  else if (move == MOVE::FORWARD) {
+		  return this->validate_move(DIRECTION::WEST);
+	  }
+	  else {
+		  return STATE::ERROR;
+	  }
+	  break;
   case DIRECTION::EAST: // east
-    if (move == MOVE::LEFT) { // left --> east (3)
-      return this->validate_move(DIRECTION::NORTH);
-    }
-    else if (move == MOVE::RIGHT) {
-      return this->validate_move(DIRECTION::SOUTH);
-    }
-    else if (move == MOVE::FORWARD) {
-      return this->validate_move(DIRECTION::EAST);
-    }
-    else {
-      return STATE::ERROR;
-    }
-    break;
+	  if (move == MOVE::LEFT) { // left --> east (3)
+		  return this->validate_move(DIRECTION::NORTH);
+	  }
+	  else if (move == MOVE::RIGHT) {
+		  return this->validate_move(DIRECTION::SOUTH);
+	  }
+	  else if (move == MOVE::FORWARD) {
+		  return this->validate_move(DIRECTION::EAST);
+	  }
+	  else {
+		  return STATE::ERROR;
+	  }
+	  break;
   }
   return STATE::ERROR;
 }
@@ -191,71 +187,71 @@ AVGController::STATE AVGController::go_to(AVGController::MOVE move) {
 // 2 - west
 // 3 - east
 AVGController::STATE AVGController::validate_move(AVGController::DIRECTION direction) {
-  switch (direction) {
-  case DIRECTION::SOUTH: // south
-    if (c_x + 1 > this->cols - 1) return STATE::UNWALKABLE;
-    if (nodes[c_x + 1][c_y].type == Node::TYPE::NOTHING) return STATE::NOTHING;
+	switch (direction) {
+	case DIRECTION::SOUTH: // south
+		if (c_x + 1 > this->cols - 1) return STATE::UNWALKABLE;
+		if (nodes[c_x + 1][c_y].type == Node::TYPE::NOTHING) return STATE::NOTHING;
 		
-    nodes[c_x + 1][c_y].has_come = true;
-    c_x++;
-    steps++;
+		nodes[c_x + 1][c_y].has_come = true;
+		c_x++;
+		steps++;
 		
-    facing = DIRECTION::SOUTH;
-    return STATE::SUCCEED;
-    break;
-  case DIRECTION::NORTH: // north
-    if (c_x - 1 < 0) return STATE::UNWALKABLE;
-    if (nodes[c_x - 1][c_y].type == Node::TYPE::NOTHING) return STATE::NOTHING;
+		facing = DIRECTION::SOUTH;
+		return STATE::SUCCEED;
+		break;
+	case DIRECTION::NORTH: // north
+		if (c_x - 1 < 0) return STATE::UNWALKABLE;
+		if (nodes[c_x - 1][c_y].type == Node::TYPE::NOTHING) return STATE::NOTHING;
 		
-    nodes[c_x - 1][c_y].has_come = true;
-    c_x--;
-    steps++;
+		nodes[c_x - 1][c_y].has_come = true;
+		c_x--;
+		steps++;
 
-    facing = DIRECTION::NORTH;
-    return STATE::SUCCEED;
-    break;
-  case DIRECTION::WEST: // west
-    if (c_y - 1 < 0) return STATE::UNWALKABLE;
-    if (nodes[c_x][c_y - 1].type == Node::TYPE::NOTHING) return STATE::NOTHING;
+		facing = DIRECTION::NORTH;
+		return STATE::SUCCEED;
+		break;
+	case DIRECTION::WEST: // west
+		if (c_y - 1 < 0) return STATE::UNWALKABLE;
+		if (nodes[c_x][c_y - 1].type == Node::TYPE::NOTHING) return STATE::NOTHING;
 		
-    nodes[c_x][c_y - 1].has_come = true;
-    c_y--;
-    steps++;
+		nodes[c_x][c_y - 1].has_come = true;
+		c_y--;
+		steps++;
 
-    facing = DIRECTION::WEST;
-    return STATE::SUCCEED;
-    break;
-  case DIRECTION::EAST: // east
-    if (c_y + 1 > this->rows - 1) return STATE::UNWALKABLE;
-    if (nodes[c_x][c_y + 1].type == Node::TYPE::NOTHING) return STATE::NOTHING;
+		facing = DIRECTION::WEST;
+		return STATE::SUCCEED;
+		break;
+	case DIRECTION::EAST: // east
+		if (c_y + 1 > this->rows - 1) return STATE::UNWALKABLE;
+		if (nodes[c_x][c_y + 1].type == Node::TYPE::NOTHING) return STATE::NOTHING;
 		
-    nodes[c_x][c_y + 1].has_come = true;
-    c_y++;
-    steps++;
+		nodes[c_x][c_y + 1].has_come = true;
+		c_y++;
+		steps++;
 		
-    facing = DIRECTION::EAST;
-    return STATE::SUCCEED;
-    break;
-  }
-  return STATE::ERROR;
+		facing = DIRECTION::EAST;
+		return STATE::SUCCEED;
+		break;
+	}
+	return STATE::ERROR;
 }
 
 std::string AVGController::current_facing() {
-  switch (facing) {
-  case DIRECTION::SOUTH: // south
-    return "South";
-    break;
-  case DIRECTION::NORTH: // north
-    return "North";
-    break;
-  case DIRECTION::WEST: // west
-    return "West";
-    break;
-  case DIRECTION::EAST: // east
-    return "East";
-    break;
-  }
-  return "Unknown";
+	switch (facing) {
+	case DIRECTION::SOUTH: // south
+		return "South";
+		break;
+	case DIRECTION::NORTH: // north
+		return "North";
+		break;
+	case DIRECTION::WEST: // west
+		return "West";
+		break;
+	case DIRECTION::EAST: // east
+		return "East";
+		break;
+	}
+	return "Unknown";
 }
 
 bool AVGController::has_come(int x, int y) {
@@ -263,7 +259,7 @@ bool AVGController::has_come(int x, int y) {
 }
 
 bool AVGController::check_status() {
-  return (health > 0 && (c_x != cols - 1 || c_y != rows - 1));
+	return (health > 0 && (c_x != cols - 1 || c_y != rows - 1));
 }
 
 void AVGController::quit() {
@@ -280,15 +276,15 @@ void AVGController::print_map() {
   // prints a 2 dimensional rectangular like text, each point is the type of node it has
   for (int i = 0; i < this->rows; ++i) {
     for (int j = 0; j < this->cols; ++j) {
-      if (i == c_x && j == c_y) {
-	std::cout << "@";
-      } else if (nodes[i][j].type == 3) {
-	std::cout << "-";
-      } else if (nodes[i][j].type == 2) {
-	std::cout << "o";
-      } else {
-	std::cout << "*";
-      }
+		if (i == c_x && j == c_y) {
+			std::cout << "@";
+		} else if (nodes[i][j].type == 3) {
+			std::cout << "-";
+		} else if (nodes[i][j].type == 2) {
+			std::cout << "o";
+		} else {
+			std::cout << "*";
+		}
     }
     std::cout << std::endl;
   }
@@ -305,45 +301,45 @@ void AVGController::fill_node(int x, int y, Node::TYPE type, std::string msg) {
 }
 
 void AVGController::init_SDLAudio() {
-  this->audio = new SDLAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);
-  index[AUDIO::INTRO] = audio->add_music(INTRO_WAV);
-  index[AUDIO::BACKGROUND] = audio->add_music(BGM_WAV);
+	this->audio = new SDLAudio(22050, MIX_DEFAULT_FORMAT, 2, 1024);
+	index[AUDIO::INTRO] = audio->add_music(INTRO_WAV);
+	index[AUDIO::BACKGROUND] = audio->add_music(BGM_WAV);
 
-  index[AUDIO::BEFORE_START] = audio->add_chunk(RULES_WAV);
-  index[AUDIO::BEEP] = audio->add_chunk(BEEP_WAV);
-  index[AUDIO::ITS_NOTHING] = audio->add_chunk(THERES_NOTHING_WAV);
-  //index[AUDIO::ITS_TREASURE] = audio->add_chunk(THERES_TREASURE_WAV);
-  index[AUDIO::ITS_UNWALKABLE] = audio->add_chunk(ITS_UNWALKABLE_WAV);
-  index[AUDIO::WIN] = audio->add_chunk(YOU_WIN_WAV);
-  index[AUDIO::TO_EAST] = audio->add_chunk(TURN_EAST_WAV);
-  index[AUDIO::TO_WEST] = audio->add_chunk(TURN_WEST_WAV);
-  index[AUDIO::TO_NORTH] = audio->add_chunk(TURN_NORTH_WAV);
-  index[AUDIO::TO_SOUTH] = audio->add_chunk(TURN_SOUTH_WAV);
-  index[AUDIO::GO_FORWARD] = audio->add_chunk(MOVE_FORWARD_WAV);
-  index[AUDIO::GO_LEFT] = audio->add_chunk(MOVE_LEFT_WAV);
-  index[AUDIO::GO_RIGHT] = audio->add_chunk(MOVE_RIGHT_WAV);
+	index[AUDIO::BEFORE_START] = audio->add_chunk(RULES_WAV);
+	index[AUDIO::BEEP] = audio->add_chunk(BEEP_WAV);
+	index[AUDIO::ITS_NOTHING] = audio->add_chunk(THERES_NOTHING_WAV);
+	//index[AUDIO::ITS_TREASURE] = audio->add_chunk(THERES_TREASURE_WAV);
+	index[AUDIO::ITS_UNWALKABLE] = audio->add_chunk(ITS_UNWALKABLE_WAV);
+	index[AUDIO::WIN] = audio->add_chunk(YOU_WIN_WAV);
+	index[AUDIO::TO_EAST] = audio->add_chunk(TURN_EAST_WAV);
+	index[AUDIO::TO_WEST] = audio->add_chunk(TURN_WEST_WAV);
+	index[AUDIO::TO_NORTH] = audio->add_chunk(TURN_NORTH_WAV);
+	index[AUDIO::TO_SOUTH] = audio->add_chunk(TURN_SOUTH_WAV);
+	index[AUDIO::GO_FORWARD] = audio->add_chunk(MOVE_FORWARD_WAV);
+	index[AUDIO::GO_LEFT] = audio->add_chunk(MOVE_LEFT_WAV);
+	index[AUDIO::GO_RIGHT] = audio->add_chunk(MOVE_RIGHT_WAV);
 
-  sdl_initialized = true;
+	sdl_initialized = true;
 }
 
 int AVGController::play_audio(AUDIO which, bool is_music, bool infinite) {
-  int loops = infinite ? -1 : 0;
-  if (sdl_initialized) {
-    if (is_music) {
-      if (this->audio->has_music()) {
-	this->audio->halt_music();
-      }
-      this->audio->play_music(index[which], loops, false, 0); 
-      return 1;
-    }
-    else {
-      this->audio->play_chunk(index[which], loops, -1, -1);
-      return 1;
-    }
-  }
-  else {
-    std::cout << "You have not initilized the SDL." << std::endl;
-    return -1;
-  }
+	int loops = infinite ? -1 : 0;
+	if (sdl_initialized) {
+		if (is_music) {
+			if (this->audio->has_music()) {
+				this->audio->halt_music();
+			}
+			this->audio->play_music(index[which], loops, false, 0); 
+			return 1;
+		}
+		else {
+			this->audio->play_chunk(index[which], loops, -1, -1);
+			return 1;
+		}
+	}
+	else {
+		std::cout << "You have not initilized the SDL." << std::endl;
+		return -1;
+	}
 }
 
