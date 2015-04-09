@@ -24,33 +24,33 @@
 
 int main(int argc, char** argv)
 {
-	try {
+  try {
 
-		myo::Hub hub("com.example.hello-myo"); // not planning to change this yet
-		std::cout << "Attempting to find a Myo..." << std::endl;
-		myo::Myo* myo = hub.waitForMyo(10000);
+    myo::Hub hub("com.example.hello-myo"); // not planning to change this yet
+    std::cout << "Attempting to find a Myo..." << std::endl;
+    myo::Myo* myo = hub.waitForMyo(10000);
 
-		if (!myo) {
-			throw std::runtime_error("Unable to find a Myo!");
-		}
+    if (!myo) {
+      throw std::runtime_error("Unable to find a Myo!");
+    }
 
-		std::cout << "Connected to a Myo armsband!" << std::endl << std::endl;
+    std::cout << "Connected to a Myo armsband!" << std::endl << std::endl;
 
-		MyoAVGCoreController collector;
+    MyoAVGCoreController collector;
 
-		// init the AVGController
-		hub.addListener(&collector);
+    // init the AVGController
+    hub.addListener(&collector);
 
-		while (1) {
-			hub.run(1000 / 10);
-			collector.print();
-			collector.eco_cycle();
-		}
-	}
-	catch (const std::exception& e) {
-		std::cerr << "Error: " << e.what() << std::endl;
-		std::cerr << "Press enter to continue.";
-		std::cin.ignore();
-		return 1;
-	}
+    while (1) {
+      hub.run(1000 / 10);
+      collector.print();
+      collector.eco_cycle();
+    }
+  }
+  catch (const std::exception& e) {
+    std::cerr << "Error: " << e.what() << std::endl;
+    std::cerr << "Press enter to continue.";
+    std::cin.ignore();
+    return 1;
+  }
 }
