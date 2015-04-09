@@ -73,12 +73,12 @@ int SDLAudio::play_music(int index, int loops, bool fadeIn, int ms) {
       return -1;
     }
   } else {
-	  if (!Mix_PlayingMusic()) {
-		  if (Mix_PlayMusic(music, loops) == -1) {
-			  logError(std::cout, "Play Music");
-			  return -1;
-		  }
-	  }
+    if (!Mix_PlayingMusic()) {
+      if (Mix_PlayMusic(music, loops) == -1) {
+	logError(std::cout, "Play Music");
+	return -1;
+      }
+    }
   }
   return 1;
 }
@@ -120,7 +120,7 @@ void SDLAudio::halt_group(int tag) {
 }
 
 int SDLAudio::has_music() {
-	return Mix_PlayingMusic();
+  return Mix_PlayingMusic();
 }
 
 void SDLAudio::logError(std::ostream &os, const std::string &msg) {
