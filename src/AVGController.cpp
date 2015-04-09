@@ -332,12 +332,10 @@ int AVGController::play_audio(AUDIO which, bool is_music, bool infinite) {
 	this->audio->halt_music();
       }
       this->audio->play_music(index[which], loops, false, 0); 
-      std::cout << "You'd be hearing a music playing." << std::endl;
       return 1;
     }
     else {
       this->audio->play_chunk(index[which], loops, -1, -1);
-      std::cout << "You'd be hearing a chunk playing." << std::endl;
       return 1;
     }
   }
